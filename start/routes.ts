@@ -19,7 +19,13 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+// Route.get('/',async () =>{ 'Hello Nivesh' })
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+//  Route.get('/PrintDate', 'TestController3sController.index');
+
+Route.post('/CreateUser', 'TestController3sController.create');
+
+Route.delete('/Item/:id','TestController3sController.destroy');
+
+Route.delete('/delete','TestController3sController.store');
+
