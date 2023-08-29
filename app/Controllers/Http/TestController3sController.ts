@@ -1,8 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+// import adonis_01s from 'App/Models/adonis_01s';
 // import Database from '@ioc:Adonis/Lucid/Database';
 // import { TestDate } from 'App/Services/Print_date';
-import { table } from 'App/Services/Insert';
-import adonis_01s from 'App/Models/adonis_01s'
+import table from 'App/Services/Insert';
+// import Valid1Validator from 'App/Validators/Valid1Validator';
+// import adonis_01s from 'App/Models/adonis_01s'
 
 
 export default class TestController3sController {
@@ -12,44 +14,54 @@ export default class TestController3sController {
   //      return date;
   // }
 
-  public async create({request}: HttpContextContract) {
-
-    console.log(request.qs());
-   let{ kh,id } = request.all();
-   console.log(kh);
-   console.log(id);
-   
-   
+  public async create({ request }: HttpContextContract) {
+    // by using dynamic values.
+    const users = request.input('users');
+    console.log(users);
     
+    // await request.validate(Valid1Validator.schema)
+    // let {Fname,Lname,Age} = request.all();
+    // await table.ToInsert(users)
+    // console.log(Fname,Lname,Age);
     
-  //  await Database.table('adonis_01s')
-  //   .table('adonis_01s')
-  //   .returning('id')
-  //   .insert({id:9,fname:'chaman',lname:'chootiya',age:100})
-
-        const result = table.ToInsert();
-        return result; 
+   
+    // console.log(users);
+    
+    // const i = await table.ToInsert(users);
+    // return i;
   }
 
-  public async store({}: HttpContextContract) {
-    const result = table.test();
-    return result; 
-  }
+  // public async store({}: HttpContextContract) {
+  //   const result = table.test();
+  //   return result; 
+  // }
 
-  // public async show({}: HttpContextContract) {}
+  public async show({params}:HttpContextContract) {
+    return await table.ToGet2(params.Id);
+  }
 
   // public async edit({}: HttpContextContract) {}
 
-  // public async update({}: HttpContextContract) {}
-
-  public async destroy({ params, response }: HttpContextContract) {
-    const item = await adonis_01s.find(params.id)
-    if (item) {
-      await item.delete()
-      return response.json({ message: 'Item deleted' });
-    }
-    return response.notFound('Item not found')
-
+  public async update({ params, request }: HttpContextContract) {
+     const data = request.all();
+     await table.updateTask(params.id,data);
+    
   }
 
+  public async destroy({ request}: HttpContextContract) {
+    // // 1st way - Delete by using user input ID
+    // let {id} = request.all();
+    // return table.ToDelete(id);
+
+  // 2nd way - delete by params ID
+  // const item = await adonis_01s.find(params.id)
+  // if (item) {
+  //   await item.delete()
+  //   return response.json({ message: 'Item deleted' });
+  // }
+
+  // by using module
+      const ID = request.input('Id');
+      return await table.ToDelete(ID);
+  }
 }

@@ -23,9 +23,11 @@ import Route from '@ioc:Adonis/Core/Route'
 
 //  Route.get('/PrintDate', 'TestController3sController.index');
 
-Route.post('/CreateUser', 'TestController3sController.create');
+Route.get('/ToGet/:id', 'TestController3sController.show');
 
-Route.delete('/Item/:id','TestController3sController.destroy');
+Route.post('/CreateUser', 'TestController3sController.create');// TO create a record
 
-Route.delete('/delete','TestController3sController.store');
+Route.delete('/Delete', 'TestController3sController.destroy');// TO delete a record with ID
+
+Route.post('/Update/:id', 'TestController3sController.update');
 
